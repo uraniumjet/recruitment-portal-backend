@@ -40,6 +40,20 @@ class Job(models.Model):
         related_name='jobs'
     )
 
+    status = models.CharField(
+        max_length=20,
+        choices=STATUS_CHOICES,
+        default='pending',
+        db_index=True
+    )
+
+    location = models.CharField(
+        max_length=100,
+        db_index=True
+    )
+
+    salary = models.IntegerField(db_index=True)
+
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

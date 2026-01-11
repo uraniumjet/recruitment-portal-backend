@@ -1,7 +1,7 @@
 from rest_framework import generics
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from .models import Job
-from .serializers import JobSerializer
+from .serializers import serializers as JobSerializer
 from .permissions import IsRecruiter, IsOwnerOrAdmin
 from .pagination import JobPagination
 from .filters import JobFilter
@@ -14,16 +14,7 @@ class AdminJobApprovalView(generics.UpdateAPIView):
     http_method_names = ['patch']
 
 
-# class JobListCreateView(generics.ListCreateAPIView):
-#     queryset = Job.objects.all()
-#     serializer_class = JobSerializer
-#     pagination_class = JobPagination
-#     filterset_class = JobFilter
 
-#     search_fields = ['title', 'description']
-#     ordering_fields = ['created_at', 'salary']
-#     ordering = ['-created_at']
-    
 class JobListCreateView(generics.ListCreateAPIView):
     serializer_class = JobSerializer
     pagination_class = JobPagination
@@ -33,8 +24,9 @@ class JobListCreateView(generics.ListCreateAPIView):
     ordering = ['-created_at']
 
     def get_queryset(self):
-        return Job.objects.filter(status='approved')
-
+        return Job.objects.filter(
+            status='approved'
+        ).select_related('posted_by')
 class JobListCreateView(generics.ListCreateAPIView):
     queryset = Job.objects.all().order_by('-created_at')
     serializer_class = JobSerializer

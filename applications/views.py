@@ -24,7 +24,7 @@ class MyApplicationsView(generics.ListAPIView):
     def get_queryset(self):
         return Application.objects.filter(
             candidate=self.request.user
-        )
+        ).select_related('job')
 
 
 # Recruiter updates application status
@@ -33,7 +33,7 @@ class UpdateApplicationStatusView(generics.UpdateAPIView):
     serializer_class = ApplicationSerializer
     permission_classes = [IsRecruiterForJob]
     http_method_names = ['patch']
-    
+
 class ApplyToJobView(generics.CreateAPIView):
     serializer_class = ApplicationSerializer
     permission_classes = [IsCandidate]
