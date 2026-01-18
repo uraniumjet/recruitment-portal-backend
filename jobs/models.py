@@ -9,6 +9,7 @@ class Job(models.Model):
         ('full_time', 'Full Time'),
         ('part_time', 'Part Time'),
         ('contract', 'Contract'),
+        ('remote', 'Remote'),
     )
     
     STATUS_CHOICES = (
@@ -35,7 +36,7 @@ class Job(models.Model):
     )
 
     posted_by = models.ForeignKey(
-        User,
+        settings.AUTH_USER_MODEL,   
         on_delete=models.CASCADE,
         related_name='jobs'
     )

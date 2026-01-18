@@ -6,7 +6,7 @@ from .views import (
 )
 
 urlpatterns = [
-    path('jobs/<int:job_id>/apply/', ApplyToJobView.as_view()),
-    path('applications/me/', MyApplicationsView.as_view()),
-    path('applications/<int:pk>/', UpdateApplicationStatusView.as_view()),
+    path('<int:job_id>/apply/', ApplyToJobView.as_view()),
+    path('me/', MyApplicationsView.as_view()),
+    path('int:pk>/', UpdateApplicationStatusView.as_view()),
 ]

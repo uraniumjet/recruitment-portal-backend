@@ -35,16 +35,25 @@ from drf_spectacular.views import (
 )
 
 urlpatterns = [
+    # Admin
     path('admin/', admin.site.urls),
-    path('api/token/', TokenObtainPairView.as_view()),
-    path('api/token/refresh/', TokenRefreshView.as_view()),
-    path('api/', include('jobs.urls')),  # ✅ THIS LINE
-    path('api/', include('applications.urls')),
-    path('', include('jobs.urls')),  # ✅ THIS LINE
+
+    # Auth (JWT)
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+
+    # API routes
+    path('api/jobs/', include('jobs.urls')),
+    path('api/applications/', include('applications.urls')),
+
+    # # Web (HTML pages)
+    # path('jobs/', include('jobs.urls')),
+
+    # API Docs
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
     path('api/docs/', SpectacularSwaggerView.as_view(url_name='schema')),
-    
 ]
+
 urlpatterns += static(
     settings.MEDIA_URL,
     document_root=settings.MEDIA_ROOT
